@@ -1,0 +1,18 @@
+{
+  "name": "Workout Routines",
+  "short_name": "Workouts",
+  "description": "Mobile-friendly workout routines with progress tracking.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#EEF1F0",
+  "theme_color": "#17252A",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

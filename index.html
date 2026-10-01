@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#17252A">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Workout Routines">
+<link rel="manifest" href="manifest.webmanifest">
+<title>Workout Routines</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#EEF1F0;--panel:#fff;--ink:#17252A;--mute:#5B6B70;--line:#D3DAD8;--green:#2E8B57;--blue:#2F6FB5;--black:#17252A;--on:#fff;--bon:#fff;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#101719;--panel:#182226;--ink:#E8EEEC;--mute:#97A8AC;--line:#2A393E;--green:#4FBF86;--blue:#6AA6E8;--black:#E8EEEC;--on:#101719;--bon:#101719}}
+:root[data-theme="dark"]{--bg:#101719;--panel:#182226;--ink:#E8EEEC;--mute:#97A8AC;--line:#2A393E;--green:#4FBF86;--blue:#6AA6E8;--black:#E8EEEC;--on:#101719;--bon:#101719}
+html{scroll-padding-top:env(safe-area-inset-top,0px);background:var(--bg)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.5 "Barlow",system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:720px;margin:0 auto;padding:28px 18px 56px}
+h1{font:700 clamp(2.4rem,9vw,3.6rem)/.95 "Barlow Condensed","Arial Narrow",Impact,sans-serif;margin:0 0 8px;letter-spacing:.01em}
+.sub{margin:0 0 24px;color:var(--mute);max-width:46ch}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible+.box{outline:3px solid var(--c,var(--ink));outline-offset:2px}
+.lvls{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:22px}
+.lvl{display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:14px;border:2px solid var(--line);border-radius:10px;background:var(--panel);text-align:left}
+.lvl .ln{font:700 1.5rem/1 "Barlow Condensed","Arial Narrow",sans-serif}
+.lvl .ls{font-size:.82rem;color:var(--mute)}
+.lvl[aria-pressed="true"]{background:var(--c);border-color:var(--c);color:var(--o)}
+.lvl[aria-pressed="true"] .ls{color:var(--o);opacity:.85}
+.mk{width:14px;height:14px;background:var(--c);margin:3px 0 10px}
+.lvl[aria-pressed="true"] .mk{background:var(--o)}
+.s-circle{border-radius:50%}.s-square{border-radius:2px}.s-diamond{transform:rotate(45deg) scale(.82);border-radius:1px}
+#plan{border-top:6px solid var(--c);padding-top:18px}
+.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:0 0 18px}
+.facts div{padding:0}
+.facts dt{font-size:.8rem;color:var(--mute)}
+.facts dd{margin:0;font:700 1.45rem/1.15 "Barlow Condensed","Arial Narrow",sans-serif}
+.days{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 10px;margin-bottom:6px}
+.day{flex:0 0 auto;min-width:104px;text-align:left;padding:9px 12px;border:1.5px solid var(--line);border-radius:8px;background:var(--panel)}
+.day b{display:block;font:700 1.1rem/1.1 "Barlow Condensed","Arial Narrow",sans-serif}
+.day span{font-size:.82rem;color:var(--mute)}
+.day[aria-pressed="true"]{border-color:var(--c);box-shadow:inset 0 -4px 0 var(--c)}
+.head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin:10px 0 8px}
+.head h2{font:700 1.9rem/1 "Barlow Condensed","Arial Narrow",sans-serif;margin:0}
+.head small{color:var(--mute)}
+.bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:10px}
+.bar i{display:block;height:100%;width:0;background:var(--c);transition:width .25s}
+ul{list-style:none;margin:0;padding:0;border:1px solid var(--line);border-radius:10px;background:var(--panel);overflow:hidden}
+li+li{border-top:1px solid var(--line)}
+.ex{display:flex;align-items:center;gap:12px;padding:13px 14px;cursor:pointer}
+.ex input{position:absolute;opacity:0;width:1px;height:1px}
+.box{flex:0 0 22px;height:22px;border:2px solid var(--mute);border-radius:5px;display:grid;place-items:center}
+input:checked+.box{background:var(--c);border-color:var(--c)}
+input:checked+.box::after{content:"";width:6px;height:11px;border:solid var(--o);border-width:0 2.5px 2.5px 0;transform:rotate(45deg) translate(-1px,-1px)}
+.nm{flex:1;font-weight:500}
+.nm em{display:block;font-style:normal;font-weight:400;font-size:.85rem;color:var(--mute)}
+input:checked~.nm{color:var(--mute);text-decoration:line-through}
+.sr{font:700 1.3rem/1 "Barlow Condensed","Arial Narrow",sans-serif;white-space:nowrap;text-align:right}
+.foot{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:12px}
+.clear{background:none;border:1.5px solid var(--line);border-radius:8px;padding:7px 12px;font-size:.9rem}
+.tip{margin:20px 0 0;padding:14px 16px;border-left:4px solid var(--c);background:var(--panel);border-radius:0 8px 8px 0}
+.note{margin:18px 0 0;font-size:.85rem;color:var(--mute)}
+@media (max-width:480px){.lvls{gap:7px}.lvl{padding:11px 10px}.lvl .ls{display:none}.lvl .ln{font-size:1.25rem}.facts dd{font-size:1.2rem}}
+@media (prefers-reduced-motion:reduce){.bar i{transition:none}}
+
+.appbar{position:sticky;top:0;z-index:20;display:flex;justify-content:space-between;align-items:center;
+  gap:12px;padding:12px max(18px,env(safe-area-inset-left)) 12px max(18px,env(safe-area-inset-right));
+  background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line)}
+.brand{font-weight:700;display:flex;align-items:center;gap:8px}
+.brand-dot{width:10px;height:10px;border-radius:50%;background:var(--green);display:inline-block}
+.install{border:1.5px solid var(--line);background:var(--panel);border-radius:999px;padding:7px 12px;font-size:.85rem}
+button{-webkit-tap-highlight-color:transparent}
+.lvl,.day,.clear,.install{touch-action:manipulation}
+.ex{min-height:58px}
+@media (max-width:480px){
+  .appbar{padding-top:max(10px,env(safe-area-inset-top))}
+  main{padding-top:22px}
+  .ex{padding:15px 12px}
+  .sr{font-size:1.15rem}
+}
+@media (display-mode:standalone){.appbar{padding-top:max(12px,env(safe-area-inset-top))}}
+
+</style>
+</head>
+<body>
+<div class="appbar">
+  <div class="brand"><span class="brand-dot"></span><span>Workout Routines</span></div>
+  <button id="installBtn" class="install" hidden>Install app</button>
+</div>
+<main>
+  <h1>Workout routines</h1>
+  <p class="sub">Choose your level, then pick a muscle group to see its exercises. Tap an exercise to check it off as you go.</p>
+
+  <div class="lvls" id="lvls"></div>
+
+  <section id="plan" aria-live="polite">
+    <dl class="facts" id="facts"></dl>
+    <div class="days" id="days"></div>
+    <div class="head"><h2 id="dt"></h2><small id="dsub"></small></div>
+    <div class="bar" role="progressbar" aria-label="Workout progress"><i id="fill"></i></div>
+    <ul id="list"></ul>
+    <div class="foot"><span id="prog"></span><button class="clear" id="clear">Clear checkmarks</button></div>
+    <p class="tip" id="tip"></p>
+  </section>
+  <p class="note">Warm up for 5 minutes before you start. If you have an injury or a health condition, check with a doctor before you start.</p>
+</main>
+
+<script>
+const L={
+beginner:{name:"Beginner",sh:"circle",c:"var(--green)",o:"var(--on)",ls:"New to lifting",cnt:"3–5",reps:"8–15",rest:"60–90 sec",
+tip:"Use light weights and focus on clean form. Train each muscle group about twice a week, and add a little weight once every set feels easy.",
+groups:[
+{g:"Chest",s:"Pecs",x:[["Incline push-up","3 × 8–10","Hands on a bench or wall"],["Knee or full push-up","3 × 8","Pick what you can control"],["Dumbbell floor press","3 × 10",""],["Machine chest press","3 × 12",""]]},
+{g:"Back",s:"Lats and upper back",x:[["Dumbbell row","3 × 10","Each side"],["Lat pulldown","3 × 10",""],["Band pull-apart","3 × 12",""],["Superman hold","3 × 15 sec","Lie face down, lift arms and legs"]]},
+{g:"Shoulders",s:"Delts",x:[["Dumbbell shoulder press","3 × 10","Light weights"],["Lateral raise","3 × 12","Very light, no swinging"],["Front raise","2 × 12",""],["Band face pull","3 × 15",""]]},
+{g:"Arms",s:"Biceps and triceps",x:[["Dumbbell curl","3 × 12",""],["Hammer curl","2 × 12",""],["Bench dip","3 × 8","Knees bent"],["Overhead triceps extension","3 × 12","One dumbbell, both hands"]]},
+{g:"Legs",s:"Quads, hamstrings, glutes",x:[["Bodyweight squat","3 × 12","Sit back, chest up"],["Glute bridge","3 × 12","Squeeze at the top"],["Step-up","3 × 10","Each leg, use a low step"],["Dumbbell Romanian deadlift","3 × 10","Hinge at the hips"],["Calf raise","3 × 15",""]]},
+{g:"Core",s:"Abs and obliques",x:[["Plank","3 × 20–30 sec","Keep hips level"],["Dead bug","3 × 8","Each side, slow"],["Bird dog","3 × 8","Each side"],["Side plank","2 × 20 sec","Each side"]]}
+]},
+intermediate:{name:"Intermediate",sh:"square",c:"var(--blue)",o:"var(--on)",ls:"Some experience",cnt:"5–6",reps:"6–15",rest:"90 sec–2 min",
+tip:"Train each muscle group about twice a week. When you hit the top of the rep range on every set, add 2–5% weight.",
+groups:[
+{g:"Chest",s:"Pecs",x:[["Bench press","4 × 8",""],["Incline dumbbell press","4 × 10",""],["Chest dip","3 × 8–10","Lean forward"],["Cable fly","3 × 12",""],["Push-up","3 × near failure",""]]},
+{g:"Back",s:"Lats and upper back",x:[["Pull-up","4 × 6–8","Use assistance if needed"],["Barbell row","4 × 8",""],["Lat pulldown","3 × 10",""],["Seated cable row","3 × 10",""],["Face pull","3 × 15",""]]},
+{g:"Shoulders",s:"Delts and traps",x:[["Overhead press","4 × 8",""],["Arnold press","3 × 10",""],["Lateral raise","4 × 15",""],["Rear delt fly","3 × 15",""],["Barbell shrug","3 × 12",""]]},
+{g:"Arms",s:"Biceps and triceps",x:[["Barbell curl","3 × 10",""],["Hammer curl","3 × 12",""],["Close-grip bench press","3 × 8",""],["Triceps pushdown","3 × 12",""],["Skull crusher","3 × 10",""]]},
+{g:"Legs",s:"Quads, hamstrings, glutes",x:[["Back squat","4 × 6–8",""],["Romanian deadlift","3 × 8",""],["Leg press","3 × 10",""],["Walking lunge","3 × 10","Each leg"],["Leg curl","3 × 12",""],["Standing calf raise","4 × 15",""]]},
+{g:"Core",s:"Abs and obliques",x:[["Hanging knee raise","3 × 12",""],["Cable crunch","3 × 12",""],["Plank","3 × 45 sec",""],["Russian twist","3 × 20",""],["Ab wheel rollout","3 × 8",""]]}
+]},
+advanced:{name:"Advanced",sh:"diamond",c:"var(--black)",o:"var(--bon)",ls:"Years of training",cnt:"6",reps:"4–15",rest:"2–3 min",
+tip:"Heavy compound lifts come first in each muscle group. Run the plan in 4–6 week blocks, then take a lighter deload week before you push again.",
+groups:[
+{g:"Chest",s:"Pecs",x:[["Barbell bench press","5 × 5","Rest 2–3 min"],["Incline dumbbell press","4 × 8",""],["Weighted dip","4 × 8",""],["Cable crossover","3 × 12",""],["Pec deck fly","3 × 15",""],["Deficit push-up","2 × max",""]]},
+{g:"Back",s:"Lats and upper back",x:[["Deadlift","4 × 4","Rest 3 min"],["Weighted pull-up","4 × 6",""],["Pendlay row","4 × 8",""],["Chest-supported row","3 × 10",""],["Single-arm lat pulldown","3 × 12",""],["Straight-arm pulldown","3 × 15",""]]},
+{g:"Shoulders",s:"Delts and traps",x:[["Standing overhead press","5 × 5",""],["Seated dumbbell press","4 × 8",""],["Cable lateral raise","4 × 15",""],["Reverse pec deck","4 × 15",""],["Barbell shrug","4 × 10",""],["Face pull","3 × 15",""]]},
+{g:"Arms",s:"Biceps and triceps",x:[["Barbell curl","4 × 8",""],["Incline dumbbell curl","3 × 10",""],["Preacher curl","3 × 12",""],["Close-grip bench press","4 × 8",""],["Overhead cable extension","3 × 12",""],["Rope pushdown","3 × 15",""]]},
+{g:"Legs",s:"Quads, hamstrings, glutes",x:[["Back squat","5 × 5","Rest 3 min"],["Romanian deadlift","4 × 8",""],["Leg press","4 × 12",""],["Bulgarian split squat","3 × 10","Each leg"],["Leg curl","4 × 12",""],["Standing calf raise","5 × 12",""]]},
+{g:"Core",s:"Abs and obliques",x:[["Hanging leg raise","4 × 12",""],["Ab wheel rollout","4 × 10",""],["Cable crunch","4 × 12",""],["Weighted plank","3 × 45 sec",""],["Pallof press","3 × 12","Each side"],["Dragon flag","3 × 6",""]]}
+]}
+};
+const $=s=>document.querySelector(s);
+let lv="beginner",di=0;const done={};
+const keyOf=(i)=>lv+"-"+di+"-"+i;
+
+$("#lvls").innerHTML=Object.keys(L).map(k=>{const p=L[k];
+ return `<button class="lvl" data-k="${k}" style="--c:${p.c};--o:${p.o}"><span class="mk s-${p.sh}"></span><span class="ln">${p.name}</span><span class="ls">${p.ls}</span></button>`}).join("");
+
+function progress(){
+ const n=L[lv].groups[di].x.length;let c=0;
+ for(let i=0;i<n;i++) if(done[keyOf(i)]) c++;
+ $("#prog").textContent=c+" of "+n+" done"+(c===n?" – nice work!":"");
+ $("#fill").style.width=(c/n*100)+"%";
+ $(".bar").setAttribute("aria-valuenow",Math.round(c/n*100));
+}
+function render(){
+ const p=L[lv],day=p.groups[di];
+ const plan=$("#plan");plan.style.setProperty("--c",p.c);plan.style.setProperty("--o",p.o);
+ document.querySelectorAll(".lvl").forEach(b=>b.setAttribute("aria-pressed",b.dataset.k===lv));
+ $("#facts").innerHTML=[["Exercises per muscle",p.cnt],["Rep range",p.reps],["Rest between sets",p.rest]].map(f=>`<div><dt>${f[0]}</dt><dd>${f[1]}</dd></div>`).join("");
+ $("#days").innerHTML=p.groups.map((d,i)=>`<button class="day" data-i="${i}" aria-pressed="${i===di}"><b>${d.g}</b><span>${d.s}</span></button>`).join("");
+ $("#dt").textContent=day.g;
+ $("#dsub").textContent=day.x.length+" exercises";
+ $("#list").innerHTML=day.x.map((e,i)=>`<li><label class="ex"><input type="checkbox" data-i="${i}" ${done[keyOf(i)]?"checked":""}><span class="box"></span><span class="nm">${e[0]}${e[2]?`<em>${e[2]}</em>`:""}</span><span class="sr">${e[1]}</span></label></li>`).join("");
+ $("#tip").textContent=p.tip;
+ progress();
+}
+document.addEventListener("click",e=>{
+ const a=e.target.closest(".lvl"),b=e.target.closest(".day");
+ if(a){lv=a.dataset.k;di=0;render();}
+ else if(b){di=+b.dataset.i;render();}
+});
+$("#list").addEventListener("change",e=>{done[keyOf(+e.target.dataset.i)]=e.target.checked;progress();});
+$("#clear").addEventListener("click",()=>{L[lv].groups[di].x.forEach((_,i)=>delete done[keyOf(i)]);render();});
+render();
+
+// PWA + persistent workout progress
+const STORAGE_KEY = "workout-routines-v1";
+try {
+  const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+  Object.assign(done, saved.done || {});
+  if (saved.lv && L[saved.lv]) lv = saved.lv;
+  if (Number.isInteger(saved.di) && L[lv].groups[saved.di]) di = saved.di;
+} catch(e) {}
+
+function saveState(){
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify({done, lv, di})); } catch(e) {}
+}
+
+const originalRender = render;
+render = function(){
+  originalRender();
+  saveState();
+};
+
+document.addEventListener("click", e => {
+  if(e.target.closest(".lvl") || e.target.closest(".day")) {
+    setTimeout(saveState, 0);
+  }
+});
+
+$("#list").addEventListener("change", () => setTimeout(saveState, 0));
+$("#clear").addEventListener("click", () => setTimeout(saveState, 0));
+
+// Install prompt
+let deferredPrompt = null;
+const installBtn = $("#installBtn");
+window.addEventListener("beforeinstallprompt", e => {
+  e.preventDefault();
+  deferredPrompt = e;
+  installBtn.hidden = false;
+});
+installBtn.addEventListener("click", async () => {
+  if (!deferredPrompt) return;
+  deferredPrompt.prompt();
+  await deferredPrompt.userChoice;
+  deferredPrompt = null;
+  installBtn.hidden = true;
+});
+window.addEventListener("appinstalled", () => {
+  installBtn.hidden = true;
+  deferredPrompt = null;
+});
+
+// Register offline service worker
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js").catch(()=>{}));
+}
+
+</script>
+</body>
+</html>
